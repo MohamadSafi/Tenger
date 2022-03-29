@@ -1,9 +1,9 @@
 import socket
-from threding import Thread
+from threading import Thread
 
 SERVER_HOST = "0.0.0.0"
-SERVER_port = 5002
-erarator_token = "<SEP>"
+SERVER_PORT = 5002
+seprator_token= "<SEP>"
 client_sockets = set()
 s = socket.socket()
 
@@ -17,22 +17,30 @@ def listen_for_clients(cs):
     while True:
         try:
             msg = cs.recv(1024).decode()
-        except Eception as e:
+        except Exception as e:
             print(f"[!] Error: {e}")
             client_sockets.remove(cs)
         else:
-            msg = msg.repllace(seprator_token, ": ")
+            msg = msg.replace(seprator_token, ": ")
         
         for client_socket in client_sockets:
-            client_socket.send(msg.encode)
-
-while True:
-    slient_socket, client_address = s.accept()
-    print(f"[+] {client_address} connected.")
-    client_socket.add(client_socket)
-    t = Thread(target=listen_for_client, args = (client_socket,))
-    t.deamon = True
-    t.start()
-
-for sc in client_sockets:
-    cs.close()
+            if client_socket == cs:
+                continue
+            try:
+                client_socket.send(msg.encode())
+            except Exception as e:
+                print(f"[!] Error: {e}")
+def main():
+    while True:
+        client_socket, client_address = s.accept()
+        print(f"[+] {client_address} connected.")
+        client_sockets.add(client_socket)
+        t = Thread(target=listen_for_clients, args = (client_socket,))
+        t.deamon = True
+        t.start()
+try :
+    main()
+except KeyboardInterrupt:
+    for cs in client_sockets:
+        cs.close()
+    s.close()
