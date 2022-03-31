@@ -25,10 +25,13 @@ colors = [Fore.BLUE, Fore.GREEN, Fore.LIGHTRED_EX,
 
 username = os.getenv("LOGNAME")
 client_color = random.choice(colors)
-SERVER_HOST = "127.0.0.1"
-SERVER_PORT = 5002
+SERVER_HOST = input(f"{Fore.RED}Please enter a server host: ")
+SERVER_PORT = int(input(f"{Fore.RED}Please enter a server port: "))
 seprator_token = "<SEP>"
 s = socket.socket()
+client_disconnected = f"{Fore.RED}{username} disconnected!"
+new_client = f"{Fore.GREEN}{username} joined the room"
+
 
 def listen_for_messages():
     while True:
@@ -42,6 +45,8 @@ def main():
     print(f"{Fore.GREEN}[*] Connecting to {SERVER_HOST}:{SERVER_PORT}...{Fore.RESET}")
     s.connect((SERVER_HOST, SERVER_PORT))
     print(f"{Fore.GREEN}[+] Connected.{Fore.RESET}")
+    s.send(new_client.encode())
+ 
 
     t = Thread(target = listen_for_messages)
     t.daemon = True
@@ -61,6 +66,7 @@ try:
 except KeyboardInterrupt:
     pass
 finally:
+    s.send(client_disconnected.encode())
     s.close()
 
 

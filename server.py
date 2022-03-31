@@ -1,5 +1,6 @@
 import socket
 from threading import Thread
+import colorama
 
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 5002
@@ -30,6 +31,8 @@ def listen_for_clients(cs):
                 client_socket.send(msg.encode())
             except Exception as e:
                 print(f"[!] Error: {e}")
+
+
 def main():
     while True:
         client_socket, client_address = s.accept()
