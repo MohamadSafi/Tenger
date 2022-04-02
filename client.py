@@ -62,13 +62,14 @@ def main():
         to_send = f"{client_color}[{date_now}] {username}{seprator_token}{to_send}{Fore.RESET}"
         s.send(to_send.encode())
 
-try:
-    main()
-except KeyboardInterrupt:
-    pass
-finally:
-    s.send(client_disconnected.encode())
-    s.close()
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        s.send(client_disconnected.encode())
+        s.close()
 
 
 

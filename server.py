@@ -84,10 +84,11 @@ def main():
     jprq_thread.start()
     
     get_jprq_port()
-try :
-    main()
-except KeyboardInterrupt:
-    for cs in client_sockets:
-        cs.close()
-    remove("jprq_output")
-    s.close()
+if __name__ == "__main__":
+    try :
+        main()
+    except KeyboardInterrupt:
+        for cs in client_sockets:
+            cs.close()
+        remove("jprq_output")
+        s.close()
