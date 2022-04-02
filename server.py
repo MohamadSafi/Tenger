@@ -36,6 +36,7 @@ def listen_for_clients(cs):
                     client_socket.send(msg.encode())
                 except Exception as e:
                     print(f"[!] Error: {e}")
+                    remove("jprq_output")
                 
     except KeyboardInterrupt:
         return
@@ -88,5 +89,5 @@ try :
 except KeyboardInterrupt:
     for cs in client_sockets:
         cs.close()
-    s.close()
     remove("jprq_output")
+    s.close()
