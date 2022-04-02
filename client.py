@@ -5,6 +5,7 @@ from datetime import datetime
 from colorama import Fore, Back
 import colorama
 import os
+import curses
 
 banner = f"""
 {Fore.BLUE}████████╗███████╗███╗   ██╗ ██████╗ ███████╗██████╗ 
@@ -57,7 +58,7 @@ def main():
         if to_send.lower() == "exit":
             break
 
-        date_now = datetime.now().strftime('%H:%M:%S')
+        date_now = datetime.now().strftime('%H:%M')
         to_send = f"{client_color}[{date_now}] {username}{seprator_token}{to_send}{Fore.RESET}"
         s.send(to_send.encode())
 
